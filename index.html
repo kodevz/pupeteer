@@ -1,0 +1,161 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="/preview">
+        <input type="text" placeholder="Your Website URL" name="url" />
+        <button type="submit">Preview</button>
+    </form>
+</body>
+
+</html> -->
+
+
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Weaver Retailer Demo</title>
+<link href="https://fonts.googleapis.com/css?family=Signika:400,700" rel="stylesheet">
+<style>
+    html {
+        display: flex;
+        height: 100%;
+    }
+
+    body {
+        margin: auto;
+        width: 100%;
+        padding: 0 .5em;
+    }
+
+    body,
+    * {
+        font-family: Signika, sans-serif;
+        font-weight: 400;
+        color: #08007a;
+        text-align: center;
+    }
+
+    body,
+    button,
+    input {
+        font-size: 30px;
+    }
+
+    h1 {
+        font-weight: 700;
+        font-size: 60px;
+        /* text-shadow: 0 1px 20px #d7d8fd; */
+        margin: 0 0 .25em;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    input[type=url] {
+        display: inline-block;
+        width: 90%;
+        max-width: 600px;
+        padding: .45em;
+        margin: .5em;
+        border: 0;
+        border-radius: 0;
+        background-color: #d7d8fd;
+    }
+
+    input[type=url]:focus {
+        outline: 3px solid #d7d8fd;
+    }
+
+    button {
+        border-radius: 0;
+        border: 0;
+        padding: .45em 1em;
+        margin: .5em;
+        width: 90%;
+        max-width: 15ex;
+        color: rgba(255, 255, 255, .75);
+        background-color: #08007a;
+    }
+
+    button:hover {
+        color: rgba(255, 255, 255, 1);
+        /* box-shadow: 0 1px 30px #60E8EE; */
+        /* text-shadow: 0 0 5px #60E8EE; */
+    }
+
+    button:active {
+        color: rgba(255, 255, 255, .55);
+        transform: scale(.95);
+    }
+
+    footer {
+        font-size: 16px;
+    }
+</style>
+
+<h1>Weaveroo Demo</h1>
+<form id="formtron" >
+    <input type="url" name="url" required placeholder="Enter a URL">
+   
+    <br />
+    <button name="preview" value="render">Render</button>
+    <button name="screenshot" value="screenshot">Screenshot</button>
+</form>
+
+<script>
+
+    function encode(url) {
+        return url.replace(/\?.*/i, function (m) {
+            return encodeURIComponent(m);
+        });
+    }
+   
+    var action;
+    var url;
+    formtron.onsubmit = function (e) {
+        e.preventDefault();
+       
+        //var url = '/' + action + '?url=' + encode(formtron.url.value) + '&screenshot=' + formtron.screenshot.value;
+
+        //location.href = url;
+        window.open(url, '_blank');
+    }
+    formtron.preview.onclick = function () {
+        action = 'preview';
+        url = '/' + action + '?url=' + encode(formtron.url.value) + '&screenshot=false';
+    }
+    formtron.screenshot.onclick = function () {
+        console.log('dd');
+        action = 'preview';
+        url = '/' + action + '?url=' + encode(formtron.url.value) + '&screenshot=true';
+    }
+    
+    var protocol = 'http://';
+    formtron.url.onpaste = function (e) {
+        const text = e.clipboardData.getData('text');
+        if (/https?:\/\//.test(text)) {
+            e.preventDefault();
+            formtron.url.value = text;
+        }
+    }
+    formtron.url.onfocus = function () {
+        if (formtron.url.value.trim() == '') {
+            formtron.url.value = protocol;
+        }
+    }
+    formtron.url.onblur = function () {
+        if (formtron.url.value.trim() == protocol) {
+            formtron.url.value = '';
+        }
+    }
+</script>
